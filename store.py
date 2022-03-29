@@ -24,7 +24,7 @@ class Store(Storage):
 
     def get_free_space(self):
         '''get_free_space() - вернуть количество свободных мест'''
-        ...
+        return self.capacity - sum(self.items[n] for n in self.items)
 
     def get_items(self):
         '''get_items() - возвращает сожержание склада в словаре {товар: количество}'''
@@ -39,6 +39,7 @@ store = Store()
 # store = Storage("gingerbread", 5)
 store.add("gingerbread", 94)
 print(store.items)
+print(store.get_free_space())
 store.add("gingerbread", 6)
 print(store.items)
 store.add("apple", 7)
