@@ -21,20 +21,21 @@ class Store(Storage):
         remove_item = self.items.get(title, None)
         if remove_item:
             if remove_item < quantity:
-                self.items[title] = 0
+                self.items.pop(title)
                 return remove_item
             else:
-                # print(self.items[title], "A")
-                # self.items[title] = self.items[title] - quantity
-                self.items[title] -= quantity
+                if remove_item == quantity:
+                    self.items.pop(title)
+                elif remove_item > quantity:
+                    self.items[title] -= quantity
                 return quantity
+        # for item in self.items:
+
         return remove_item
-        # del_item = self.items.pop(title, "Not exist")
-        # return f'try to remove: {title}, {del_item}'
 
     def get_free_space(self):
         '''get_free_space() - вернуть количество свободных мест'''
-        return self.capacity - sum(self.items[n] for n in self.items)
+        return f'{self.capacity - sum(self.items[n] for n in self.items)} - количество свободных мест'
 
     def get_items(self):
         '''get_items() - возвращает содержание склада в словаре {товар: количество}'''
@@ -58,6 +59,6 @@ print(store.items)
 store.add("apple", 7)
 print(store.items)
 store.get_items()
-print(store.remove("apple", 1))
+print(store.remove("apple", 7))
 print(store.items)
 store.get_unique_items_count()
