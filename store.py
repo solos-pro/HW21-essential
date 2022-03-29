@@ -3,8 +3,9 @@ from storage import Storage
 
 class Store(Storage):
     def __init__(self):
-        self.items = {}
-        self.capacity = 100
+        super().__init__()
+        # self.items = {}
+        # self.capacity = 100
 
     def add(self, title: str, quantity: int):
         '''add (<название>, <количество>) - увеличивает запас items'''
