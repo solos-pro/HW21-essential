@@ -28,11 +28,13 @@ class Store(Storage):
 
     def get_items(self):
         '''get_items() - возвращает сожержание склада в словаре {товар: количество}'''
-        print(self.items, 'get_items')
+        print(self.items, 'сожержание склада')
         return self.items
 
     def get_unique_items_count(self):
         '''get_unique_items_count() - возвращает количество уникальных товаров'''
+        print(len(self.items.keys()), 'количество уникальных товаров')
+        return self.items.keys()
 
 
 
@@ -48,3 +50,4 @@ print(store.items)
 store.get_items()
 print(store.remove("apples"))
 print(store.items)
+store.get_unique_items_count()
