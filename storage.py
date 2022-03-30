@@ -41,12 +41,12 @@ class Storage:
 
     def get_free_space(self):
         '''get_free_space() - вернуть количество свободных мест'''
-        return f'{self.capacity - sum(self.items[n] for n in self.items)} - количество свободных мест'
+        return self.capacity - sum(self.items[n] for n in self.items)
 
     @abstractmethod
     def get_items(self):
         '''get_items() - возвращает содержание склада в словаре {товар: количество}'''
-        # print(self.items, 'содержание склада')
+        # print('\nсодержание склада')
         return self.items
 
     @abstractmethod
