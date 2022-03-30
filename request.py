@@ -26,52 +26,37 @@ class Request:
 
     def shipping(self):
         show(self.shop.get_items(), self.to)
-        # print(self.shop.get_items())
         self.shop.remove(self.product, self.amount)
-        # print(self.shop.get_items())
         if self.shop.items.get(self.product, None):
             if self.shop.items.get(self.product, None) >= self.amount:
                 self.shop.remove(self.product, self.amount)
                 print(f'Заберите {self.amount} {self.product} в {self.to}')
                 return 0
 
-        if self.shop.get_free_space() < self.amount:
+        if (self.shop.items.get(self.product, None) + self.shop.get_free_space()) < self.amount:
             print('В магазин недостаточно места, попробуйте что-то другое')
             return 0
 
-        if not self.store_list.items.get(self.product, None):
-            print(f'В складе {self.from_} нет {self.product}, попробуйте что-то другое')
+        if not (self.store_list.items.get(self.product, None) or self.shop.items.get(self.product, None)):
+            print(f'В складе {self.from_} и магазине {self.to} нет {self.product}, попробуйте что-то другое')
             return 0
 
-        elif self.store_list.items.get(self.product, None) < self.amount:
-            print(f'В складе {self.from_} недостаточно {self.product}, попробуйте уменьшить до {self.store_list.items.get(self.product)}')
+        elif (self.store_list.items.get(self.product, None) + self.shop.items.get(self.product, None)) < self.amount:
+            print(f'В складе {self.from_} + магазине {self.to} недостаточно {self.product}, попробуйте уменьшить до /'
+                  f'{self.store_list.items.get(self.product) + self.shop.items.get(self.product, None)}')
             return 0
 
         else:
-            self.store_list.remove(self.product, self.amount)
+            num_remove_from_store = self.amount - self.shop.items.get(self.product, None)
+            self.store_list.remove(self.product, num_remove_from_store)
+            print(f"Перевозим со склада {self.from_} в магазин {self.to} {num_remove_from_store} {self.product} ")
 
-            show(self.store_list.get_items(), self.from_)
-            show(self.shop.get_items(), self.to)
+            self.shop.add(self.product, num_remove_from_store)
+            print(f"Принято со склада {self.from_} в магазине {self.to} {num_remove_from_store} {self.product} ")
+
+            self.shop.remove(self.product, num_remove_from_store)
+            print(f"Заказ {num_remove_from_store} {self.product} получен в магазине {self.to}")
 
 
 
-
-
-
-store1 = Store({'gingerbread': 25, 'apple': 15})
-store1.add('gingerbread', 25)
-store1.add('orange', 5)
-
-shop1 = Shop()
-shop1.add('orange', 125)
-
-# request = {'gingerbread': 5, 'apple': 0}
-request_1 = 'Доставить 2 orange из склад1 в магазин5'
-req_1 = Request(store1, shop1, request_1)
-
-# print(req_1)
-# print(store1.get_items())
-# print(shop1.get_items())
-repr(req_1)
-req_1.shipping()
 

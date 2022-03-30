@@ -2,13 +2,14 @@ from abc import abstractmethod
 
 
 class Storage:
-    def __init__(self, items={}):
+    def __init__(self, name, items={}, capacity=100):
         self.items = items
-        self.capacity = 100
+        self.capacity = capacity
+        self._name = name
 
-    # @property
-    # def get_items(self):
-    #     return self.items
+    @property
+    def get_name(self):
+        return self._name
 
     @abstractmethod
     def add(self, title: str, quantity: int):
@@ -35,6 +36,8 @@ class Storage:
                 elif remove_item > quantity:
                     self.items[title] -= quantity
                 return quantity
+        else:
+            print("Нет товара, ошибка")
         return remove_item
 
     @abstractmethod

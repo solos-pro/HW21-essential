@@ -2,8 +2,8 @@ from storage import Storage
 
 
 class Store(Storage):
-    def __init__(self, items={}):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         # self.items = {}
         # self.capacity = 100
 

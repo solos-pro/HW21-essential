@@ -2,14 +2,14 @@ from storage import Storage
 
 
 class Shop(Storage):
-    def __init__(self, limit=5):
-        super().__init__()
-        self.items = {}
-        self.capacity = 5
-        self.limit = limit
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # self.items = {}
+        # self.capacity = capacity
+        # self.limit = limit
 
     def add(self, name, count):
-        if self.get_unique_items_count() < self.limit:
+        if self.get_unique_items_count() < self.capacity:
             super().add(name, count)
         else:
             print("Товар не может быть добавлен")
